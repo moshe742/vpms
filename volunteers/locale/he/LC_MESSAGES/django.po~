@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-02-17 00:37+0200\n"
+"POT-Creation-Date: 2014-02-17 12:55+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,50 +17,77 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: models.py:7 models.py:19
+#: models.py:7 models.py:18 models.py:29
 msgid "name"
-msgstr "שם"
+msgstr ""
+
+#: models.py:13 templates/home.html:47
+msgid "project"
+msgstr ""
+
+#: models.py:14
+msgid "projects"
+msgstr ""
+
+#: models.py:24
+msgid "skill"
+msgstr ""
+
+#: models.py:25
+msgid "skills"
+msgstr ""
+
+#: models.py:30
+msgid "email"
+msgstr ""
+
+#: models.py:31
+msgid "phone"
+msgstr ""
+
+#: models.py:41
+msgid "volunteer"
+msgstr ""
+
+#: models.py:42
+msgid "volunteers"
+msgstr ""
 
 #: templates/home.html:5 templates/home.html.py:18
 msgid "arrived"
-msgstr "הגיע/ה"
+msgstr ""
 
 #: templates/home.html:8
 msgid "volunteer name"
-msgstr "שם מתנדב/ת"
+msgstr ""
 
 #: templates/home.html:10 templates/home.html.py:40
-#, fuzzy
 msgid "search"
-msgstr "חיפשת"
+msgstr ""
 
 #: templates/home.html:13 templates/home.html.py:42
 msgid "searched"
-msgstr "חיפשת"
+msgstr ""
 
 #: templates/home.html:23 templates/home.html.py:52
 msgid "there are no results"
-msgstr "אין תוצאות"
+msgstr ""
 
 #: templates/home.html:26
 #, python-format
 msgid "Please correct the error below."
 msgid_plural "Please correct the %(counter)s errors below."
-msgstr[0] "אנא תקנו את השגיאה הבאה."
-msgstr[1] "אנא תקנו את %(counter)s השגיאות הבאות למטה."
+msgstr[0] ""
+msgstr[1] ""
 
 #: templates/home.html:32
 msgid "add volunteer"
-msgstr "הוספת מתנדב/ת"
+msgstr ""
 
 #: templates/home.html:36
 msgid "add project"
-msgstr "הוספת פרויקט"
+msgstr ""
 
 #: templates/home.html:38
 msgid "project name"
-msgstr "שם פרויקט"
-
-#: templates/home.html:47
-msgid "project"
-msgstr "פרויקט"
+msgstr ""
