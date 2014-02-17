@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+{% block content %}
+		<ul>
+			{% for p in arrived %}
+			<li>{{ p }}, {{ p.email }}</li>
+			{% endfor %}
+		</ul>
+{% endblock %}
+
+
