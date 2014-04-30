@@ -1,13 +1,22 @@
-{% extends "base.html" %}
+{% extends "volunteers/base.html" %}
+{% load i18n %}
 {% block content %}
 		{% if form.errors %}
 			<p style="color: red;">Please correct the error{{ form.errors|pluralize }} below.</p>
 		{% endif %}
 		<form action="" method="POST">{% csrf_token %}
-			<table>
-			{{ form.as_table }}
-			</table>
-			<input type="submit" value="add project">
+			<fieldset>
+				<div class="row">
+					<div class="field">
+						{{ form.name.errors }}
+						<label for="id_name">{% trans 'name' %}</label>
+						{{ form.name }}
+					</div>
+				</div>
+			</fieldset>
+			<div class="row center">
+				<button type="submit">{% trans 'add eknight' %}</button>
+			</div>
 		</form>
 		<ul>
 			{% for p in project_list %}

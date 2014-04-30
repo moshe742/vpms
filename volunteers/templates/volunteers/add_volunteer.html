@@ -1,0 +1,101 @@
+{% extends "volunteers/base.html" %}
+{% load i18n %}
+{% block content %}
+		<a href="{% url 'arrived' %}">{% trans "arrived" %}</a>
+		{% if form.errors %}
+			<p style="color: red;">{% blocktrans count form.errors|length as counter %}Please correct the error below.{% plural %}Please correct the {{ counter }} errors below.{% endblocktrans %}</p>
+		{% endif %}
+		<form action="" autocomplete="off" method="POST">{% csrf_token %}
+			<fieldset>
+				<div class="row">
+					<div class="field">
+						{{ form.first_name.errors }}
+						<label for="id_first_name">{% trans 'First name' %}</label>
+						{{ form.first_name }}
+					</div>
+					<div class="field">
+						{{ form.last_name.errors }}
+						<label for="id_last_name">{% trans 'Last name' %}</label>
+						{{ form.last_name }}
+					</div>
+				</div>
+				<div class="row">
+					<div class="field">
+						{{ form.email.errors }}
+						<label for="id_email">{% trans 'Email' %}</label>
+						{{ form.email }}
+					</div>
+					<div class="field">
+						{{ form.phone.errors }}
+						<label for="phone">{% trans 'Phone' %}</label>
+						{{ form.phone }}
+					</div>
+				</div>
+			</fieldset>
+			<fieldset>
+				<div class="row">
+					<div class="field">
+						{{ form.github.errors }}
+						<label for="github">{% trans 'Github' %}</label>
+						{{ form.github }}
+					</div>
+					<div class="field">
+						{{ form.linkedin.errors }}
+						<label for="linkedin">{% trans 'linkedin' %}</label>
+						{{ form.linkedin }}
+					</div>
+				</div>
+				<div class="row">
+					<div class="field">
+						{{ form.facebook.errors }}
+						<label for="id_facebook">{% trans 'facebook' %}</label>
+						{{ form.facebook }}
+					</div>
+					<div class="field">
+						{{ form.tweeter.errors }}
+						<label for="id_tweeter">{% trans 'tweeter' %}</label>
+						{{ form.tweeter }}
+					</div>
+				</div>
+				<div class="row">
+					<div class="field">
+						{{ form.work_place.errors }}
+						<label for="id_work_place">{% trans 'work place' %}</label>
+						{{ form.work_place }}
+					</div>
+				</div>
+			</fieldset>
+			<hr>
+			<fieldset>
+				<div class="columns">
+					<div class="column">
+						{{ form.eknight_vol.errors }}
+						<label for="id_eknight_vol">{% trans 'eknight' %}</label>
+						{{ form.eknight_vol }}
+					</div>
+					<div class="column">
+						{{ form.expertise.errors }}
+						<label for="expertise">{% trans 'Expertise' %}</label>
+						{{ form.expertise }}
+					</div>
+					<div class="column">
+						{{ form.community.errors }}
+						<label for="community">{% trans 'Community' %}</label>
+						{{ form.community }}
+					</div>
+					<!--<div class="column">
+						{{ form.skill.errors }}
+						<label for="skills">{% trans 'Skills' %}</label>
+						{{ form.skill }}
+					</div>-->
+				</div>
+			</fieldset>
+			<div id="expertise_other" class="hidden">
+				<label for="other">{% trans 'other' %}</label><input type="text" id="other" name="other">
+			</div>
+			<div class="row">
+				<button type="submit">{% trans 'add volunteer' %}</button>
+				<button type="reset">{% trans 'reset' %}</button>
+			</div>
+		</form>
+{% endblock %}

@@ -1,7 +1,7 @@
 from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponseRedirect
 from volunteers.forms import Add_volunteer
-from volunteers.models import Volunteer, Project
+from volunteers.models import Volunteer, EKnight
 import datetime
 
 def home(request):
@@ -14,7 +14,7 @@ def home(request):
 		volunteer_id = Volunteer.objects.get(id=request.GET['user_name']).save()
 	elif 'project' in request.GET and request.GET['project']:
 		name = request.GET['project']
-		projects = Project.objects.filter(name__icontains=name)
+		projects = EKnight.objects.filter(name__icontains=name)
 		return render(request, 'home.html', {'form': form, 'search_project': name, 'projects': projects})
 	elif request.method == 'POST':
 		form = Add_volunteer(request.POST, request.user)

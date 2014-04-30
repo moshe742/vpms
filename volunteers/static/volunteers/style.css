@@ -1,0 +1,257 @@
+/* http://meyerweb.com/eric/tools/css/reset/ 
+   v2.0 | 20110126
+   License: none (public domain)
+*/
+
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed, input,
+figure, figcaption, footer, header, hgroup, 
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	font-size: 100%;
+	font: inherit;
+	vertical-align: baseline;
+}
+
+/* HTML5 display-role reset for older browsers */
+article, aside, details, figcaption, figure, 
+footer, header, hgroup, menu, nav, section {
+	display: block;
+}
+
+body {
+	line-height: 1;
+}
+
+ol, ul {
+	list-style: none;
+}
+blockquote, q {
+	quotes: none;
+}
+
+blockquote:before, blockquote:after,
+q:before, q:after {
+	content: '';
+	content: none;
+}
+
+table {
+	border-collapse: collapse;
+	border-spacing: 0;
+}
+
+/* start of the design */
+body {
+	direction: rtl;
+	width: 80%;
+	margin: 0 auto;
+}
+
+.center {
+	margin: 0 auto;
+	width: 90%;
+	height: 1000px;
+}
+
+.hidden {
+	visibility: hidden;
+}
+
+.hello {
+	fill: 'white';
+}
+h3 {
+	font-size: 30px;
+}
+
+button {
+	color: white;
+	background-color: blue;
+	border-radius: 5px;
+}
+
+svg .node circle {
+	cursor: pointer;
+	stroke: #3182bd;
+	stroke-width: 1.5px;
+}
+
+svg .link {
+	fill: none;
+	stroke: #9ecae1;
+	stroke-width: 5px;
+}
+
+svg .node text {
+	font: 20px sans-serif;
+	pointer-events: none;
+	text-anchor: middle;
+}
+
+svg .arrived {
+	fill: #08ff00;
+}
+
+svg .not-arrived {
+	fill: #ff4646;
+}
+
+svg .add {
+	fill: #fd8d3c;
+}
+
+svg .expended {
+	fill: #c6dbef;
+}
+
+svg .expended text {
+	fill: '#3182bd';
+}
+svg .condensed {
+	fill: #3182bd;
+}
+
+.field .errorlist {
+	margin-right: 20%;
+	color: red;
+}
+
+label {
+	text-align: center;
+	display: inline-block;
+	width: 25%;
+	vertical-align: middle;
+}
+
+input {
+	display: inline-block;
+	vertical-align: middle;
+	width: 70%;
+	border: solid;
+	border-width: 1px;
+	border-radius: 5px;
+	height: 30px;
+}
+
+.row {
+	height: 50px;
+	margin-top: 10px;
+}
+
+.field {
+	width: 49%;
+	display: inline-block;
+}
+
+.columns {
+	-webkit-column-count:4; /* Chrome, Safari, Opera */
+	-moz-column-count:4; /* Firefox */
+	column-count:4;
+	-webkit-column-gap: 10px;
+	-moz-column-gap: 10px;
+	column-gap: 10px;
+	height: 260px;
+	text-align: center;
+}
+
+.column label {
+	width: 100%;
+}
+
+.column input {
+	width: 100%;
+	margin-top: 20px;
+}
+
+input:focus:valid {
+	border-style: solid;
+	border-color: green;
+}
+
+input:invalid {
+	border-style: solid;
+	border-color: red;
+	border-width: 1px;
+}
+
+select {
+	height: 220px;
+	width: 100%;
+	margin-top: 20px;
+}
+
+.ui-widget-overlay {
+	background-color: rgba(0,0,0,0.5);
+	z-index: 1;
+	width: 100%;
+	height: 100%;
+	position: fixed;
+	top: 0;
+	left: 0;
+}
+
+.ui-dialog {
+	z-index: 10;
+}
+
+.ui-dialog-titlebar {
+	background-color: 'blue';
+}
+.popup {
+	border-width: 5px;
+	border-style: solid;
+	border-color: blue;
+	border-radius: 10px;
+	background-color: aliceblue;
+	width: 50%;
+	height: 200px;
+	margin: 0 auto;
+}
+
+.no-close .ui-dialog-titlebar-close {
+	display: none;
+}
+
+.popup-title {
+	height: 40px;
+	margin-top: 0;
+	background-color: blue;
+	color: white;
+}
+
+.title {
+	margin-right: 10px;
+	padding-top: 5px;
+	vertical-align: middle;
+}
+
+.popup-submit {
+	background-color: green;
+}
+
+.popup-cancel {
+	background-color: red;
+}
+
+footer {
+	height: 40px;
+	background-color: darkslategray;
+	color: white;
+	text-align: center;
+}
+
+footer p {
+	padding-top: 10px;
+}

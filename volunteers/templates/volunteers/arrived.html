@@ -1,8 +1,8 @@
 {% extends "volunteers/base.html" %}
 {% block content %}
 		<ul>
-			{% for p in project_list %}
-			<li><a href="/volunteers/enter_name/{{ p.id }}/">{{ p }}</a></li>
+			{% for volunteer in arrived %}
+				<li>{{ volunteer.user_id }}</li>
 			{% endfor %}
 		</ul>
 {% endblock %}

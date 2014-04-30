@@ -1,3 +1,207 @@
-<form action="" method="GET">
-	<input type="text" name="volunteer" value="">
-</form>
+{% extends "volunteers/base.html" %}
+{% load i18n %}
+{% block content %}
+		<script>
+			//Width and height
+			var width = 1000;
+			var height = 1000;
+			var root = {{ eknights|safe }};
+
+			var force = d3.layout.force()
+					.size([width, height])
+					.linkDistance(160)
+					.charge(-2000)
+					.on("tick", tick);
+
+			var svg = d3.select("body").append("svg")
+					.attr("width", width)
+					.attr("height", height);
+
+			var link = svg.selectAll(".link"),
+				node = svg.selectAll(".node");
+
+			window.onload=start();
+			update();
+
+			function start() {
+				var nodes = flatten(root),
+					links = d3.layout.tree().links(nodes);
+
+				// Restart the force layout.
+				force
+					.nodes(nodes)
+					.links(links)
+					.start();
+
+				// Update the links…
+				link = link.data(links, function(d) { return d.target.id; });
+
+				// Exit any old links.
+				link.exit().remove();
+
+				// Enter any new links.
+				link.enter().insert("line", ".node")
+					.attr("class", "link");
+
+				// Update the nodes…
+				node.data(nodes, function(d) { collapse(d); });
+				
+			}
+
+			function update() {
+
+				var nodes = flatten(root),
+					links = d3.layout.tree().links(nodes);
+
+				// Restart the force layout.
+				force
+					.nodes(nodes)
+					.links(links)
+					.start();
+
+				// Update the links…
+				link = link.data(links, function(d) { return d.target.id; });
+
+				// Exit any old links.
+				link.exit().remove();
+
+				// Enter any new links.
+				link.enter().insert("line", ".node")
+					.attr("class", "link");
+
+				// Update the nodes…
+				node = node.data(nodes, function(d) { return d.id; });
+
+				// Exit any old nodes.
+				node.exit().remove();
+
+				// Enter any new nodes.
+				var node_enter = node.enter().append('g')
+					.attr('class', 'node')
+					.on('click', click)
+					.call(force.drag);
+
+				node_enter.append("circle")
+					.attr("r", 50)
+					.attr('id', function(d) {
+						return 'circle' + d.user_id;
+					})
+					.attr('class', function(d) {
+						if (d.arrived) {
+							return 'arrived';
+						} else {
+							return 'not-arrived';
+						}
+					});
+
+				node_enter.append('text');
+
+				node_enter.selectAll('text').each(liners);
+
+				var colors = d3.scale.category10();
+				node.select('circle')
+					.attr('class', color);
+
+			}
+
+			var time_out;
+
+			// Toggle children on click.
+			function click(d) {
+				if (!d3.event.defaultPrevented) {
+					if (d.level == 'volunteer' && d.arrived) {
+						setTimeout(function() {
+							$('.popup').dialog('close')
+						}, 7000);
+						$('.popup').dialog({
+							dialogClass: "no-close",
+							modal: 'true',
+							position: {
+								my: 'center center',
+								at: 'center center'
+							},
+							buttons: [
+							{
+								text: "{% trans 'cancel' %}",
+								click: function() {
+									$('.popup').dialog('close');
+								},
+							},
+							{
+								text: "{% trans 'OK' %}",
+								click: function() {
+									arrival(d.user_id, d.arrived, d.signed);
+									d.arrived = false;
+									$('#circle'+d.user_id).attr('class', 'not-arrived');
+									$('.popup').dialog('close');
+								},
+							}],
+							height: 200,
+							title: "{% trans 'alert' %}",
+						});
+						$('.popup').dialog('open');
+					} else if (d.level == 'volunteer') {
+				/*		if (message) {
+							$('.message').dialog('open');
+						}
+				*/		$('#circle'+d.user_id).attr('class', 'arrived');
+						arrival(d.user_id, d.arrived, d.signed);
+						d.arrived = true;
+					} else if (d.level == 'add_eknight') {
+						window.location="{% url 'add_project' %}";
+					} else if (d.level == 'add_volunteer') {
+						window.location="add_volunteer/" + d.eknight_id;
+					}
+					if (d.level == 'project') {
+						$('circle'+d.id).prevAll().addClass('hello');
+						$('circle'+d.id).nextAll().addClass('hello');
+					}
+					if (d.children) {
+						d._children = d.children;
+						d.children = null;
+					} else {
+						
+						d.children = d._children;
+						d._children = null;
+					}
+					update();
+				}
+			}
+
+			// Returns a list of all nodes under the root.
+			function flatten(root) {
+				var nodes = [], i = 0;
+
+				function recurse(node) {
+					if (node.children) node.children.forEach(recurse);
+					if (!node.id) node.id = ++i;
+					nodes.push(node);
+				}
+
+				recurse(root);
+				return nodes;
+			}
+		</script>
+
+		<div class="popup">
+			<!--<div class="popup-title">
+				<h3 class='title'>{% trans 'alert' %}</h3>
+			</div>-->
+			<p class="popup-body">{% trans 'are you sure you want to un-select this user as arrived?' %}</p>
+			<!--<p class="popup-footer">
+				<button type="submit" class="popup-submit">yes</button>
+				<button class="popup-cancel">cancel</button>
+			</p>-->
+		</div>
+
+		<div class='message'>
+			{{ message }}
+		</div>
+
+		<script>
+			$('.popup').dialog({autoOpen: false});
+			$('.popup-cancel').click(function() {
+				$('.popup').dialog('close');
+			});
+		</script>
+{% endblock %}
