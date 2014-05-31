@@ -4,8 +4,7 @@ from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponseRedirect, HttpResponse
 from volunteers.forms import Add_project, Add_volunteer
 from volunteers.models import EKnight, Volunteer, Arrival, Expertise, Skill
-import json
-import csv
+import json, ast
 import datetime, re
 
 def home(request):
@@ -16,7 +15,7 @@ def home(request):
 	for project in projects:
 		volunteers = []
 		volunteers.append({'name': u'הוספת מתנדב/ת', 'eknight_id': project.id, 'level': 'add_volunteer'})
-		for volunteer in project.volunteer.all():
+		for volunteer in project.volunteers.all():
 			arrival = Arrival.objects.filter(user_id=volunteer.id, user_arrived=datetime.date.today())
 			v = volunteer.first_name + " " + volunteer.last_name
 			u_arrived = str()
@@ -61,9 +60,10 @@ def add_project(request):
 
 
 def add_volunteer(request, eknight_id):
-	form = Add_volunteer(initial={'eknight_vol': eknight_id})
+	form = Add_volunteer(initial={'eknights': eknight_id})
 	if request.method == 'POST':
 		form = Add_volunteer(request.POST, request.user)
+		form.old_num_of_arrivals=4
 #		if request.POST['skill']:
 #			skills = re.split('\W+', request.POST['skill'])
 #			for sk in skills:
@@ -78,9 +78,9 @@ def add_volunteer(request, eknight_id):
 				expert.save()
 				other_expertise = Expertise.objects.get(name=expert)
 				done.expertise.add(other_expertise.id)
-			user = Volunteer.objects.get(email=done.email)
-			arrival = Arrival(user_id=user)
-			arrival.save()
+#			user = Volunteer.objects.get(email=done.email)
+#			arrival = Arrival(user_id=user)
+#			arrival.save()
 			return HttpResponseRedirect('/')
 	return render(request, 'volunteers/add_volunteer.html', {'form': form})
 
@@ -99,11 +99,36 @@ def joined(request, project_id, volunteer_id):
 	return HttpResponse(html)
 	return render(request, "you %s vol entered project" % project_id)
 
-def csv2db(request):
-	csv_file = open('VOL12.csv', 'rb')
-	csv_data = csv.reader(csv_file)
-	for row in csv_data:
-		volunteer = Volunteer(first_name=row[0], last_name=row[1], email=row[3], phone=row[8],
-		home_address=row[9], work_place=row[10], github=row[17], facebook=[18], linkedin=row[19], tweeter=row[20], birth_date=row[21])
-		volunteer.save()
+def data_insert(request):
+	with open('data', 'rb') as f:
+		s = f.read()
+		data_dic = ast.literal_eval(s)
+		attr_map = {"fname": "first_name", "lname": 'last_name', 'phonenum': 'phone',
+					'work_study_place': 'work_place', 'emailad': 'email',
+					'vol_message': 'volunteer_messages'}
+#		assert False, data_dic
+		for user_name, user_data in data_dic.iteritems():
+			v = Volunteer()
+			for key, val in user_data.iteritems():
+				if key != 'name' and val:
+					if key == 'eknight':
+						for date_str, eknight_name in val.iteritems():
+							pass
+					elif key == 'role':
+						expertise = Expertise.objects.filter(name=val)
+						val = expertise
+					attr = attr_map[key] if key in attr_map else key
+					setattr(v, attr, val)
+			v.save()
+#dic = {}
+#    attribute_map = {}
+#    for user_name, user_data in dic:
+#        v = Volunteer()
+#        for key, val in user_data:
+#            attr = attribute_map[key] if key in attribute_map else key
+#            setattr(v, attr, val)
+#        v.save()
+#		volunteer = Volunteer(first_name=row[0], last_name=row[1], email=row[3], phone=row[8],
+#		home_address=row[9], work_place=row[10], github=row[17], facebook=[18], linkedin=row[19], tweeter=row[20], birth_date=row[21])
+#		volunteer.save()
 	return HttpResponseRedirect('/')

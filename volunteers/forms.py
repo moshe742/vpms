@@ -6,9 +6,9 @@ from volunteers.models import EKnight, Expertise, Volunteer
 class Add_volunteer(ModelForm):
 	class Meta:
 		model = Volunteer
+		exclude = ['old_num_of_arrivals']
 		widgets = {
 			'first_name': forms.TextInput(attrs={
-				'type': 'text',
 				'autofocus': 'true',
 				'required': 'required'
 			}),
@@ -21,9 +21,7 @@ class Add_volunteer(ModelForm):
 			}),
 			'phone': forms.TextInput(attrs={
 				'type': 'phone',
-			}),
-			'work_place': forms.TextInput(attrs={
-				'type': 'text',
+				'required': 'required',
 			}),
 #			'skill': forms.TextInput(attrs={
 #				'max_length': 999,

@@ -52,9 +52,16 @@
 						{{ form.facebook }}
 					</div>
 					<div class="field">
-						{{ form.tweeter.errors }}
-						<label for="id_tweeter">{% trans 'tweeter' %}</label>
-						{{ form.tweeter }}
+						{{ form.twitter.errors }}
+						<label for="id_tweeter">{% trans 'twitter' %}</label>
+						{{ form.twitter }}
+					</div>
+				</div>
+				<div class="row">
+					<div class="field">
+						{{ form.birth_date.errors }}
+						<label for="id_birth_date">{% trans 'birth date' %}</label>
+						{{ form.birth_date }}
 					</div>
 				</div>
 				<div class="row">
@@ -69,9 +76,9 @@
 			<fieldset>
 				<div class="columns">
 					<div class="column">
-						{{ form.eknight_vol.errors }}
-						<label for="id_eknight_vol">{% trans 'eknight' %}</label>
-						{{ form.eknight_vol }}
+						{{ form.eknights.errors }}
+						<label for="id_eknights">{% trans 'eknight' %}</label>
+						{{ form.eknights }}
 					</div>
 					<div class="column">
 						{{ form.expertise.errors }}
