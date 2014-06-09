@@ -145,7 +145,8 @@
 							$('.message').dialog('open');
 						}
 				*/		$('#circle'+d.user_id).attr('class', 'arrived');
-						arrival(d.user_id, d.arrived, d.signed);
+						alert(d.eknight_id);
+						arrival(d.user_id, d.arrived, d.eknight_id, d.signed);
 						d.arrived = true;
 					} else if (d.level == 'add_eknight') {
 						window.location="{% url 'add_project' %}";

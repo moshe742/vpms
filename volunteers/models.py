@@ -46,6 +46,10 @@ class Volunteer(models.Model):
 	email = models.CharField(_('email'), max_length=500)
 	# phone = comma seperated string field, first phone is most recent.
 	phone = models.CharField(_('phone'), max_length=100, blank=True)
+	address = models.CharField(_('address'), max_length=200, blank=True)
+	address_date = models.DateField(_('address_date'), auto_now_add=True)
+	work_study_place = models.CharField(_('work_study_place'), max_length=200, blank=True)
+	work_study_place_date = models.DateField(_('work_study_place_date'), auto_now_add=True)
 	facebook = models.CharField(_('facebook'), max_length=200, blank=True)
 	twitter = models.CharField(_('twitter'), max_length=200, blank=True)
 	github = models.CharField(_('github'), max_length=200, blank=True)

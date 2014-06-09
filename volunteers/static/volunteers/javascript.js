@@ -4,11 +4,12 @@ $('document').ready(function() {
 	});
 });
 
-function user_arrived(user_id, arrived) {
+function user_arrived(user_id, arrived, project) {
+	alert(project);
 	$.ajax({
 		url: "http://localhost:8000/volunteers/welcome/",
 		cache: false,
-		data: {'volunteer_id': user_id},
+		data: {'volunteer_id': user_id, 'eknight_id': project},
 		dataType: 'text',
 		type: 'GET',
 		success: function() {
@@ -40,14 +41,15 @@ function liners(d) {
 	}
 }
 
-function arrival(user_id, arrived, arrived_volunteer) {
+function arrival(user_id, arrived, project, arrived_volunteer) {
+	alert('hello'+project);
 	if (arrived) {
 		clearTimeout(time_out);
 		if (arrived_volunteer) {
-			time_out = setTimeout(function() {user_arrived(user_id, arrived)}, 1000);
+			time_out = setTimeout(function() {user_arrived(user_id, arrived, project)}, 1000);
 		}
 	} else {
-		time_out = setTimeout(function() {user_arrived(user_id, arrived)}, 7000);
+		time_out = setTimeout(function() {user_arrived(user_id, arrived, project)}, 1000);
 	}
 }
 

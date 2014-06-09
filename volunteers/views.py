@@ -26,7 +26,7 @@ def home(request):
 			else:
 				u_arrived = False
 				color = '#ff4646'
-			volunteers.append({'name': v, 'user_id': volunteer.id, 'color': color, 'arrived': u_arrived, 'signed': u_arrived, 'level': 'volunteer'})
+			volunteers.append({'name': v, 'user_id': volunteer.id, 'ekinght_id': project.id, 'color': color, 'arrived': u_arrived, 'signed': u_arrived, 'level': 'volunteer'})
 		eknights.append({'name': project.name, 'level': 'project', "children": volunteers})
 	eknight = {'name': _('hasadna'), 'level': 'hasadna', 'children': eknights}
 	eknight = json.dumps(eknight, ensure_ascii=False)
@@ -39,9 +39,11 @@ def arrived(request):
 	return render(request, 'volunteers/arrived.html', {'arrived': arrive })
 
 def welcome(request):
-	v_id = request.GET['volunteer_id']
+	v_id = request.POST['volunteer_id']
+	eknight_id = request.POST['eknight']
+	coord_message = request.POST['coordinator_message']
 	vol_id = Volunteer.objects.get(id=v_id)
-	arrived, created = Arrival.objects.get_or_create(user_id=vol_id, user_arrived=datetime.date.today())
+	arrived, created = Arrival.objects.get_or_create(user=vol_id, user_arrived=datetime.date.today(), eknight=eknight_id, coordinator_message=coord_message)
 	if not created:
 		arrived.delete()
 	return HttpResponse('success')
@@ -63,7 +65,7 @@ def add_volunteer(request, eknight_id):
 	form = Add_volunteer(initial={'eknights': eknight_id})
 	if request.method == 'POST':
 		form = Add_volunteer(request.POST, request.user)
-		form.old_num_of_arrivals=4
+#		form.old_num_of_arrivals=4
 #		if request.POST['skill']:
 #			skills = re.split('\W+', request.POST['skill'])
 #			for sk in skills:
@@ -72,12 +74,12 @@ def add_volunteer(request, eknight_id):
 #				enter_skill.save()
 		if form.is_valid():
 			done = form.save()
-			if request.POST['other']:
-				expert = Expertise(name=request.POST['other'])
-				expert.full_clean()
-				expert.save()
-				other_expertise = Expertise.objects.get(name=expert)
-				done.expertise.add(other_expertise.id)
+#			if request.POST['other']:
+#				expert = Expertise(name=request.POST['other'])
+#				expert.full_clean()
+#				expert.save()
+#				other_expertise = Expertise.objects.get(name=expert)
+#				done.expertise.add(other_expertise.id)
 #			user = Volunteer.objects.get(email=done.email)
 #			arrival = Arrival(user_id=user)
 #			arrival.save()
@@ -104,7 +106,7 @@ def data_insert(request):
 		s = f.read()
 		data_dic = ast.literal_eval(s)
 		attr_map = {"fname": "first_name", "lname": 'last_name', 'phonenum': 'phone',
-					'work_study_place': 'work_place', 'emailad': 'email',
+					'work_study_place': 'work_study_place', 'emailad': 'email',
 					'vol_message': 'volunteer_messages'}
 #		assert False, data_dic
 		for user_name, user_data in data_dic.iteritems():

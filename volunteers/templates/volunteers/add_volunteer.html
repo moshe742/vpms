@@ -59,16 +59,21 @@
 				</div>
 				<div class="row">
 					<div class="field">
-						{{ form.birth_date.errors }}
-						<label for="id_birth_date">{% trans 'birth date' %}</label>
-						{{ form.birth_date }}
+						{{ form.address.errors }}
+						<label for="id_address">{% trans 'address' %}</label>
+						{{ form.address }}
+					</div>
+					<div class="field">
+						{{ form.work_study_place.errors }}
+						<label for="id_work_study_place">{% trans 'work study address' %}</label>
+						{{ form.work_study_place }}
 					</div>
 				</div>
 				<div class="row">
 					<div class="field">
-						{{ form.work_place.errors }}
-						<label for="id_work_place">{% trans 'work place' %}</label>
-						{{ form.work_place }}
+						{{ form.birth_date.errors }}
+						<label for="id_birth_date">{% trans 'birth date' %}</label>
+						{{ form.birth_date }}
 					</div>
 				</div>
 			</fieldset>
