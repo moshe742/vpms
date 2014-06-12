@@ -5,18 +5,17 @@ $('document').ready(function() {
 });
 
 function user_arrived(user_id, arrived, project) {
-	alert(project);
 	$.ajax({
 		url: "http://localhost:8000/volunteers/welcome/",
 		cache: false,
-		data: {'volunteer_id': user_id, 'eknight_id': project},
-		dataType: 'text',
+		data: {'volunteer_id': user_id, 'eknight_id': project, 'coordinator_message': false},
+		dataType: 'html',
 		type: 'GET',
 		success: function() {
 			location.reload();
 		},
 		error: function(xhr, status, error) {
-			alert(xhr, status, error);
+			alert(xhr +'1', status +'2', error + '3');
 		}
 	});
 }
@@ -42,14 +41,13 @@ function liners(d) {
 }
 
 function arrival(user_id, arrived, project, arrived_volunteer) {
-	alert('hello'+project);
 	if (arrived) {
 		clearTimeout(time_out);
 		if (arrived_volunteer) {
 			time_out = setTimeout(function() {user_arrived(user_id, arrived, project)}, 1000);
 		}
-	} else {
-		time_out = setTimeout(function() {user_arrived(user_id, arrived, project)}, 1000);
+	} else { // have 7 seconds to change back if mistaken
+		time_out = setTimeout(function() {user_arrived(user_id, arrived, project)}, 7000);
 	}
 }
 

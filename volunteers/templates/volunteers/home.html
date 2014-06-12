@@ -141,11 +141,7 @@
 						});
 						$('.popup').dialog('open');
 					} else if (d.level == 'volunteer') {
-				/*		if (message) {
-							$('.message').dialog('open');
-						}
-				*/		$('#circle'+d.user_id).attr('class', 'arrived');
-						alert(d.eknight_id);
+						$('#circle'+d.user_id).attr('class', 'arrived');
 						arrival(d.user_id, d.arrived, d.eknight_id, d.signed);
 						d.arrived = true;
 					} else if (d.level == 'add_eknight') {

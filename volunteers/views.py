@@ -26,7 +26,7 @@ def home(request):
 			else:
 				u_arrived = False
 				color = '#ff4646'
-			volunteers.append({'name': v, 'user_id': volunteer.id, 'ekinght_id': project.id, 'color': color, 'arrived': u_arrived, 'signed': u_arrived, 'level': 'volunteer'})
+			volunteers.append({'name': v, 'user_id': volunteer.id, 'eknight_id': project.id, 'color': color, 'arrived': u_arrived, 'signed': u_arrived, 'level': 'volunteer'})
 		eknights.append({'name': project.name, 'level': 'project', "children": volunteers})
 	eknight = {'name': _('hasadna'), 'level': 'hasadna', 'children': eknights}
 	eknight = json.dumps(eknight, ensure_ascii=False)
@@ -39,10 +39,12 @@ def arrived(request):
 	return render(request, 'volunteers/arrived.html', {'arrived': arrive })
 
 def welcome(request):
-	v_id = request.POST['volunteer_id']
-	eknight_id = request.POST['eknight']
-	coord_message = request.POST['coordinator_message']
+	v_id = request.GET['volunteer_id']
+	eknight_id = request.GET['eknight_id']
+	coord_message = request.GET['coordinator_message']
 	vol_id = Volunteer.objects.get(id=v_id)
+	eknight_id = EKnight.objects.get(id=eknight_id)
+
 	arrived, created = Arrival.objects.get_or_create(user=vol_id, user_arrived=datetime.date.today(), eknight=eknight_id, coordinator_message=coord_message)
 	if not created:
 		arrived.delete()
