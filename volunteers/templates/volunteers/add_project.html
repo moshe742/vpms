@@ -12,6 +12,11 @@
 						<label for="id_name">{% trans 'name' %}</label>
 						{{ form.name }}
 					</div>
+					<div class="field">
+						{{ form.slug.errors }}
+						<label for="id_slug">{% trans 'slug' %}</label>
+						{{ form.slug }}
+					</div>
 				</div>
 			</fieldset>
 			<div class="row center">
