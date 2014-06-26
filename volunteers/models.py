@@ -38,7 +38,7 @@ class Community(models.Model):
 		verbose_name = _('community')
 		verbose_name_plural = _('communities')
 
-
+	
 class Volunteer(models.Model):
 	first_name = models.CharField(_('first name'), max_length=200)
 	last_name = models.CharField(_('last name'), max_length=200)
@@ -57,7 +57,7 @@ class Volunteer(models.Model):
 	birth_date = models.DateField(_('birth date'), blank=True, null=True)
 	expertise = models.ManyToManyField(Expertise, blank=True)
 #	skill = models.ManyToManyField(Skill,related_name='skill_name', blank=True)
-#	relevant_info = models.CharField(_('relevant information'), max_length=999, blank=True)
+	relevant_info = models.CharField(_('relevant information'), max_length=999, blank=True)
 	eknights = models.ManyToManyField('EKnight', related_name='volunteers')
 	community = models.ManyToManyField(Community)
 	# number of arrivals before tracking arrival dates
@@ -78,7 +78,7 @@ class Admin_comment(models.Model):
 	text = models.CharField(_('text'), max_length=800, blank=True)
 
 	def __unicode__(self):
-		return self.user_arrived
+		return self.user
 
 	class Meta:
 		verbose_name = _('admin comment')
@@ -125,6 +125,7 @@ class Arrival(models.Model):
 		verbose_name = _('arrival')
 		verbose_name_plural = _('arrivals')
 
+
 # temporary class until we merge with arnon's eknight land
 class EKnight(models.Model):
 	name = models.CharField(_('name'), max_length=200)
@@ -136,6 +137,7 @@ class EKnight(models.Model):
 	class Meta:
 		verbose_name = _('eknight')
 		verbose_name_plural = _('eknights')
+
 
 class Coordinator_question(models.Model):
 	question = models.CharField(_('question'), max_length=200)

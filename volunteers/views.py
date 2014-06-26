@@ -3,7 +3,7 @@ from django.utils.translation import ugettext as _
 from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponseRedirect, HttpResponse
 from volunteers.forms import Add_project, Add_volunteer
-from volunteers.models import EKnight, Volunteer, Arrival, Expertise, Skill
+from volunteers.models import EKnight, Volunteer, Arrival, Expertise, Skill, Volunteer_address, Coordinator_question, Coordinator_question_answer
 import json, ast
 import datetime, re
 
@@ -54,9 +54,9 @@ def add_project(request):
 	project_list = EKnight.objects.all().order_by('name')
 	form = Add_project()
 	if request.method == 'POST':
-		form_filled = Add_project(request.POST, request.user)
-		if form_filled.is_valid():
-			clean_form = form_filled.cleaned_data
+		form = Add_project(request.POST, request.user)
+		if form.is_valid():
+			clean_form = form.cleaned_data
 			added = EKnight(name=clean_form['name'])
 			added.save()
 			return HttpResponseRedirect('/')
@@ -83,8 +83,9 @@ def add_volunteer(request, eknight_id):
 #				other_expertise = Expertise.objects.get(name=expert)
 #				done.expertise.add(other_expertise.id)
 #			user = Volunteer.objects.get(email=done.email)
-#			arrival = Arrival(user_id=user)
-#			arrival.save()
+			e_id = EKnight.objects.get(id=eknight_id)
+			arrival = Arrival(user=done, eknight=e_id)
+			arrival.save()
 			return HttpResponseRedirect('/')
 	return render(request, 'volunteers/add_volunteer.html', {'form': form})
 
@@ -104,12 +105,14 @@ def joined(request, project_id, volunteer_id):
 	return render(request, "you %s vol entered project" % project_id)
 
 def data_insert(request):
+	q = Coordinator_question(question='lectures wanted')
+	q.save()
 	with open('data', 'rb') as f:
 		s = f.read()
 		data_dic = ast.literal_eval(s)
 		attr_map = {"fname": "first_name", "lname": 'last_name', 'phonenum': 'phone',
 					'work_study_place': 'work_study_place', 'emailad': 'email',
-					'vol_message': 'volunteer_messages'}
+					'vol_message': 'volunteer_messages', 20: 'email'}
 #		assert False, data_dic
 		for user_name, user_data in data_dic.iteritems():
 			v = Volunteer()
@@ -118,12 +121,48 @@ def data_insert(request):
 					if key == 'eknight':
 						for date_str, eknight_name in val.iteritems():
 							pass
+					elif key == 20:
+						pass
+					elif key == 'previous_contacts':
+						pass
 					elif key == 'role':
 						expertise = Expertise.objects.filter(name=val)
 						val = expertise
+					elif key == 'city':
+						comm = Community.objects.filter(name=val)
+						val = comm
+					elif key == 'regdates':
+						pass
+#						for a in val:
+#							if user_data['eknight']:
+#								ek = EKnight.objects.get(name=user_data['eknight'])
+#							else:
+#								ek = EKnight.objects.get(name='other')
+#							arrival = Arrival(user=v, user_arrived=a, eknight=ek, coordinator_message="")
+#							arrival.save()
 					attr = attr_map[key] if key in attr_map else key
 					setattr(v, attr, val)
-			v.save()
+			vol = v.save()
+			for a in user_data['regdates']:
+				if user_data['eknight']:
+					ek = EKnight.objects.get(name=user_data['eknight'])
+				else:
+					ek = EKnight.objects.get(name='other')
+				arrival = Arrival(user=v, user_arrived=a, eknight=ek, coordinator_message="")
+				arrival.save()
+			add = ""
+			if user_data['address']:
+				add = Volunteer_address(user=v, address=user_data['address'])
+			else:
+				add = Volunteer_address(user=v, address="no address")
+			add.save()
+			ans = ""
+			if user_data['wanted_lectures']:
+				ans = Coordinator_question_answer(question=q, answer=user_data['wanted_lectures'], user=v)
+			else:
+				ans = Coordinator_question_answer(question=q, answer="no data", user=v)
+			ans.save()
+
 #dic = {}
 #    attribute_map = {}
 #    for user_name, user_data in dic:
