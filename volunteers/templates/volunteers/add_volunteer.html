@@ -110,4 +110,13 @@
 				<button type="reset">{% trans 'reset' %}</button>
 			</div>
 		</form>
+		<script>
+			$(function() {
+				var current = new Date();
+				var current_year = current.getFullYear();
+				var first = current_year - 100;
+				var last = current_year - 10;
+				$("#id_birth_date").datepicker({ changeYear: true, yearRange: first + ":" + last, isRTL: true });
+			});
+		</script>
 {% endblock %}
