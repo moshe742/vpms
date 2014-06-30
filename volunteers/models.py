@@ -38,7 +38,7 @@ class Community(models.Model):
 		verbose_name = _('community')
 		verbose_name_plural = _('communities')
 
-	
+
 class Volunteer(models.Model):
 	first_name = models.CharField(_('first name'), max_length=200)
 	last_name = models.CharField(_('last name'), max_length=200)
@@ -56,7 +56,7 @@ class Volunteer(models.Model):
 	linkedin = models.CharField(_('linkedin'), max_length=200, blank=True)
 	birth_date = models.DateField(_('birth date'), blank=True, null=True)
 	expertise = models.ManyToManyField(Expertise, blank=True)
-#	skill = models.ManyToManyField(Skill,related_name='skill_name', blank=True)
+	# skill = models.ManyToManyField(Skill,related_name='skill_name', blank=True)
 	relevant_info = models.CharField(_('relevant information'), max_length=999, blank=True)
 	eknights = models.ManyToManyField('EKnight', related_name='volunteers')
 	community = models.ManyToManyField(Community)
@@ -78,7 +78,7 @@ class Admin_comment(models.Model):
 	text = models.CharField(_('text'), max_length=800, blank=True)
 
 	def __unicode__(self):
-		return self.user
+		return self.user.first_name + " " + self.user.last_name + " " + self.text
 
 	class Meta:
 		verbose_name = _('admin comment')
@@ -90,7 +90,7 @@ class Volunteer_work_study_place(models.Model):
 	place = models.CharField(_('place'), max_length=800, blank=True)
 
 	def __unicode__(self):
-		return self.user_arrived
+		return self.user.first_name + " " + self.user.last_name + " " + self.place
 
 	class Meta:
 		verbose_name = _('work study place')
@@ -103,7 +103,7 @@ class Volunteer_address(models.Model):
 	address = models.CharField(_('address'), max_length=800, blank=True)
 
 	def __unicode__(self):
-		return self.user_arrived
+		return self.address
 
 	class Meta:
 		verbose_name = _('volunteer address')
@@ -119,7 +119,7 @@ class Arrival(models.Model):
 	# TODO- send email to coordinator with the message
 
 	def __unicode__(self):
-		return self.user_arrived
+		return self.user.first_name + " " + self.user.last_name + " " + str(self.user_arrived)
 
 	class Meta:
 		verbose_name = _('arrival')
@@ -145,7 +145,7 @@ class Coordinator_question(models.Model):
 	required = models.BooleanField(_('required'), default=False)
 
 	def __unicode__(self):
-		return self.name
+		return self.question
 
 	class Meta:
 		verbose_name = _('coordinator question')
@@ -158,7 +158,7 @@ class Coordinator_question_answer(models.Model):
 	user = models.ForeignKey(Volunteer, related_name='answers')
 
 	def __unicode__(self):
-		return self.name
+		return self.user.first_name + " " + self.user.last_name + " " + self.answer
 
 	class Meta:
 		verbose_name = _('coordinator question answer')

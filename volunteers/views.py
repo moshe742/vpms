@@ -18,6 +18,7 @@ def home(request):
 		for volunteer in project.volunteers.all():
 			arrival = Arrival.objects.filter(user_id=volunteer.id, user_arrived=datetime.date.today())
 			v = volunteer.first_name + " " + volunteer.last_name
+			print v
 			u_arrived = str()
 			color = str()
 			if arrival:
@@ -67,13 +68,6 @@ def add_volunteer(request, eknight_id):
 	form = Add_volunteer(initial={'eknights': eknight_id})
 	if request.method == 'POST':
 		form = Add_volunteer(request.POST, request.user)
-#		form.old_num_of_arrivals=4
-#		if request.POST['skill']:
-#			skills = re.split('\W+', request.POST['skill'])
-#			for sk in skills:
-#				enter_skill = Skill(name=sk)
-#				enter_skill.full_clean()
-#				enter_skill.save()
 		if form.is_valid():
 			done = form.save()
 #			if request.POST['other']:
@@ -110,9 +104,9 @@ def data_insert(request):
 	with open('data', 'rb') as f:
 		s = f.read()
 		data_dic = ast.literal_eval(s)
-		attr_map = {"fname": "first_name", "lname": 'last_name', 'phonenum': 'phone',
+		attr_map = {'fname': 'first_name', 'lname': 'last_name', 'phonenum': 'phone',
 					'work_study_place': 'work_study_place', 'emailad': 'email',
-					'vol_message': 'volunteer_messages', 20: 'email'}
+					'vol_message': 'volunteer_messages'}
 #		assert False, data_dic
 		for user_name, user_data in data_dic.iteritems():
 			v = Volunteer()
@@ -122,7 +116,7 @@ def data_insert(request):
 						for date_str, eknight_name in val.iteritems():
 							pass
 					elif key == 20:
-						pass
+						continue
 					elif key == 'previous_contacts':
 						pass
 					elif key == 'role':
@@ -144,10 +138,11 @@ def data_insert(request):
 					setattr(v, attr, val)
 			vol = v.save()
 			for a in user_data['regdates']:
-				if user_data['eknight']:
-					ek = EKnight.objects.get(name=user_data['eknight'])
-				else:
-					ek = EKnight.objects.get(name='other')
+				pass
+#				if user_data['eknight']:
+#					ek = EKnight.objects.get(name=user_data['eknight'])
+#				else:
+				ek = EKnight.objects.get(name='ללא חשמביר')
 				arrival = Arrival(user=v, user_arrived=a, eknight=ek, coordinator_message="")
 				arrival.save()
 			add = ""
