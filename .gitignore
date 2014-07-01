@@ -1,4 +1,0 @@
-# the db file (while using sqlite3
-*.db
-*.csv
-*~
