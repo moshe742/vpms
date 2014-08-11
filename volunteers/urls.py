@@ -18,6 +18,7 @@ urlpatterns = patterns('',
 	url(r'^add_project/$', volunteers.views.add_project, name='add_project'),
 	url(r'^enter_project/$', volunteers.views.enter_project, name="enter_project"),
 	url(r'^data_insert/$', volunteers.views.data_insert, name='csv2db'),
+	url(r'^feedback/$', volunteers.views.feedback, name="feedback"),
 #	url(r'^volunteer/', include('volunteers.urls')),
 	# Uncomment the admin/doc line below to enable admin documentation:
 	# url(r'^admin/doc/', include('django.contrib.admindocs.urls')),

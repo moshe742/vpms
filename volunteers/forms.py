@@ -34,8 +34,10 @@ class Add_volunteer(ModelForm):
 		}
 
 class Add_project(ModelForm):
+
 	class Meta:
 		model = EKnight
+		fields = "__all__"
 		widgets = {
 			'name': forms.TextInput(attrs={
 				'type': 'text',

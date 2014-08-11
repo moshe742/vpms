@@ -3,7 +3,7 @@ from django.utils.translation import ugettext as _
 from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponseRedirect, HttpResponse
 from volunteers.forms import Add_project, Add_volunteer
-from volunteers.models import EKnight, Volunteer, Arrival, Expertise, Skill, Volunteer_address, Coordinator_question, Coordinator_question_answer
+from volunteers.models import EKnight, Volunteer, Arrival, Expertise, Skill, Volunteer_address, Coordinator_question, Coordinator_question_answer#, Feedback
 import json, ast
 import datetime, re
 
@@ -97,6 +97,14 @@ def joined(request, project_id, volunteer_id):
 	html = "you %s vol entered project %s" % (volunteer_id, project_id)
 	return HttpResponse(html)
 	return render(request, "you %s vol entered project" % project_id)
+
+def feedback(request):
+	form = Feedback()
+	if request.method == 'POST':
+		form = Feedback(request.POST)
+		if form.is_valid():
+			done = form.save()
+	return render(request, 'volunteers/feedback.html', {form: form})
 
 def data_insert(request):
 	q = Coordinator_question(question='lectures wanted')

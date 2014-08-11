@@ -142,6 +142,7 @@ class EKnight(models.Model):
 class Coordinator_question(models.Model):
 	question = models.CharField(_('question'), max_length=200)
 	date_time = models.DateField(_('date time'), auto_now=True)
+	open_until = models.DateField(_('open until'))
 	required = models.BooleanField(_('required'), default=False)
 
 	def __unicode__(self):
@@ -163,3 +164,8 @@ class Coordinator_question_answer(models.Model):
 	class Meta:
 		verbose_name = _('coordinator question answer')
 		verbose_name_plural = _('coordinator question answers')
+
+
+#class Feedback(models.Model):
+#	name = models.CharField(_('name'), max_length=200, blank=True, null=True)
+#	first_register = models.TextField(_('first_register'), blank=True, null=True)
