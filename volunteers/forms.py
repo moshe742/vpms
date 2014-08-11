@@ -5,7 +5,7 @@ from volunteers.models import EKnight, Expertise, Volunteer
 import datetime
 
 class Add_volunteer(ModelForm):
-	birth_date = forms.DateField(input_formats = ['%d/%m/%Y'])
+	birth_date = forms.DateField(input_formats = ['%d/%m/%Y'], required=False)
 	class Meta:
 		model = Volunteer
 		exclude = ['old_num_of_arrivals']
@@ -25,7 +25,7 @@ class Add_volunteer(ModelForm):
 				'type': 'phone',
 				'required': 'required',
 			}),
-#			'birth_date': forms.DateField(initial=datetime.date.today)
+			'birth_date': forms.DateField(initial=datetime.date.today())
 #			'skill': forms.TextInput(attrs={
 #				'max_length': 999,
 #				'autocomplete': 'on',
