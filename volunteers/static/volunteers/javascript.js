@@ -41,6 +41,7 @@ function liners(d) {
 }
 
 function arrival(user_id, arrived, project, arrived_volunteer) {
+	alert("user id " + user_id + " arrived " + arrived + " project " + project + " arrived volunteer " + arrived_volunteer);
 	if (arrived) {
 		clearTimeout(time_out);
 		if (arrived_volunteer) {

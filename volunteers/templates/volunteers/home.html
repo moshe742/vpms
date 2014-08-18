@@ -130,7 +130,7 @@
 							{
 								text: "{% trans 'OK' %}",
 								click: function() {
-									arrival(d.user_id, d.arrived, d.signed);
+									arrival(d.user_id, d.arrived, d.eknight_id, d.signed);
 									d.arrived = false;
 									$('#circle'+d.user_id).attr('class', 'not-arrived');
 									$('.popup').dialog('close');
