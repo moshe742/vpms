@@ -119,7 +119,7 @@ class Arrival(models.Model):
 	# TODO- send email to coordinator with the message
 
 	def __unicode__(self):
-		return self.user.first_name + " " + self.user.last_name + " " + str(self.user_arrived)
+		return str(self.user_arrived)
 
 	class Meta:
 		verbose_name = _('arrival')

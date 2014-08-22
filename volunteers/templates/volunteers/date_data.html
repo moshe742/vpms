@@ -1,0 +1,8 @@
+{% extends "volunteers/base.html" %}
+{% load i18n %}
+{% block content %}
+{% for d in date %}
+<p><a href="{% url 'volunteer_data' d.user.id %}">{{ d.user }}</a> {{ d }}</p>
+{% endfor %}
+{% endblock %}
+

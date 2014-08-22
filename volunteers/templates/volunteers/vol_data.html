@@ -1,0 +1,9 @@
+{% extends "volunteers/base.html" %}
+{% load i18n %}
+{% block content %}
+<p>{{ vol }}</p>
+<p>{{ vol.id }}</p>
+{% for d in date %}
+<p><a href="{% url 'date_data' d %}">{{ d }}</a></p>
+{% endfor %}
+{% endblock %}

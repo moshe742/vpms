@@ -178,3 +178,17 @@ def data_insert(request):
 #		home_address=row[9], work_place=row[10], github=row[17], facebook=[18], linkedin=row[19], tweeter=row[20], birth_date=row[21])
 #		volunteer.save()
 	return HttpResponseRedirect('/')
+
+def vol_dates(request):
+	volunteer = Volunteer.objects.all().order_by('last_name')
+	dates = Arrival.objects.distinct().order_by('user_arrived')
+	return render(request, 'volunteers/vol_date.html', {'vol': volunteer, 'date': dates})
+
+def volunteer_data(request, v_id):
+	vol = Volunteer.objects.get(id=v_id)
+	vol_date = Arrival.objects.filter(user=v_id)
+	return render(request, "volunteers/vol_data.html", {"vol": vol, "date": vol_date})
+
+def date_data(request, user_arrived):
+	vol_dates = Arrival.objects.filter(user_arrived=user_arrived)
+	return render(request, "volunteers/date_data.html", {"date": vol_dates})
