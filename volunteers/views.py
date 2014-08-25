@@ -180,13 +180,13 @@ def data_insert(request):
 #		volunteer.save()
 	return HttpResponseRedirect('/')
 
-@login_required
+@login_required(login_url="/admin/login")
 def vol_dates(request):
 	volunteer = Volunteer.objects.all().order_by('last_name')
 	dates = Arrival.objects.distinct().order_by('user_arrived')
 	return render(request, 'volunteers/vol_date.html', {'vol': volunteer, 'date': dates})
 
-@login_required
+@login_required(login_url="/admin/login")
 def volunteer_data(request, v_id):
 	vol = Volunteer.objects.get(id=v_id)
 	vol_date = Arrival.objects.filter(user=v_id)
@@ -197,7 +197,7 @@ def volunteer_data(request, v_id):
 		logged_in = False
 	return render(request, "volunteers/vol_data.html", {"vol": vol, "date": vol_date, "logged_in": logged_in})
 
-@login_required
+@login_required(login_url="/admin/login")
 def date_data(request, user_arrived):
 	vol_dates = Arrival.objects.filter(user_arrived=user_arrived)
 	return render(request, "volunteers/date_data.html", {"date": vol_dates})
