@@ -3,6 +3,7 @@ import volunteers.views
 
 # Uncomment the next two lines to enable the admin:
 from django.contrib import admin
+from django.contrib.auth import views as auth_views
 import volunteers.views
 admin.autodiscover()
 
@@ -10,6 +11,7 @@ urlpatterns = patterns('',
 	# Examples:
 	url(r'^$', 'volunteers.views.home', name='home'),
 	url(r'^arrived/$', volunteers.views.arrived, name="arrived"),
+	url(r'^accounts/login/$', auth_views.login),
 	# url(r'^vpms/', include('vpms.foo.urls')),
 	url(r'^add_volunteer/(?P<eknight_id>\d+)/$', volunteers.views.add_volunteer, name='add_volunteer'),
 	url(r'^enter_name/(?P<project_id>\d+)/$', volunteers.views.enter_name),

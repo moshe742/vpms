@@ -1,9 +1,10 @@
 {% extends "volunteers/base.html" %}
 {% load i18n %}
 {% block content %}
-<p>{{ vol }}</p>
-<p>{{ vol.id }}</p>
+<p class="field">{{ vol }}</p>
+<p class="field">{{ vol.email }}</p>
+<p class="field">{{ vol.phone }}</p>
 {% for d in date %}
-<p><a href="{% url 'date_data' d %}">{{ d }}</a></p>
+<p>{{ d.eknight }} <a href="{% url 'date_data' d %}">{{ d }}</a></p>
 {% endfor %}
 {% endblock %}

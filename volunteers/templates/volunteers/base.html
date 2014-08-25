@@ -11,7 +11,9 @@
 		<script src="{% static 'volunteers/javascript.js' %}"></script>
 	</head>
 	<body>
-		<!--<p>{{ user }}</p>-->
+		{% if logged_in %}
+		<p>{{ user }}</p>
+		{% endif %}
 		{% block sidebar %}{% endblock %}
 		{% block content %}{% endblock %}
 		<footer>

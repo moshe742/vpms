@@ -66,7 +66,7 @@ class Volunteer(models.Model):
 	updated = models.DateField(_('updated'), auto_now=True)
 
 	def __unicode__(self):
-		return unicode(self.first_name) + unicode(self.last_name)
+		return unicode(self.first_name) + " " + unicode(self.last_name)
 
 	class Meta:
 		verbose_name = _('volunteer')

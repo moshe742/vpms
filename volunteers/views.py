@@ -4,6 +4,7 @@ from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponseRedirect, HttpResponse
 from volunteers.forms import Add_project, Add_volunteer
 from volunteers.models import EKnight, Volunteer, Arrival, Expertise, Skill, Volunteer_address, Coordinator_question, Coordinator_question_answer#, Feedback
+from django.contrib.auth.decorators import login_required
 import json, ast
 import datetime, re
 
@@ -34,7 +35,7 @@ def home(request):
 	return render(request, 'volunteers/home.html', {'eknights': eknight, 'message': 'message', 'links': links})
 
 def arrived(request):
-	
+
 	arrive = Arrival.objects.filter(user_arrived=datetime.date.today())
 #	volunteers = Volunteer.objects.filter(id=arrive.user_id)
 	return render(request, 'volunteers/arrived.html', {'arrived': arrive })
@@ -179,16 +180,24 @@ def data_insert(request):
 #		volunteer.save()
 	return HttpResponseRedirect('/')
 
+@login_required
 def vol_dates(request):
 	volunteer = Volunteer.objects.all().order_by('last_name')
 	dates = Arrival.objects.distinct().order_by('user_arrived')
 	return render(request, 'volunteers/vol_date.html', {'vol': volunteer, 'date': dates})
 
+@login_required
 def volunteer_data(request, v_id):
 	vol = Volunteer.objects.get(id=v_id)
 	vol_date = Arrival.objects.filter(user=v_id)
-	return render(request, "volunteers/vol_data.html", {"vol": vol, "date": vol_date})
+	logged_in = bool()
+	if request.user.is_authenticated():
+		logged_in = True
+	else:
+		logged_in = False
+	return render(request, "volunteers/vol_data.html", {"vol": vol, "date": vol_date, "logged_in": logged_in})
 
+@login_required
 def date_data(request, user_arrived):
 	vol_dates = Arrival.objects.filter(user_arrived=user_arrived)
 	return render(request, "volunteers/date_data.html", {"date": vol_dates})
