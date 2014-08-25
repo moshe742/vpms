@@ -4,7 +4,9 @@
 <p class="field">{{ vol }}</p>
 <p class="field">{{ vol.email }}</p>
 <p class="field">{{ vol.phone }}</p>
+<div>
 {% for d in date %}
-<p>{{ d.eknight }} <a href="{% url 'date_data' d %}">{{ d }}</a></p>
+<p class="field">{{ d.eknight }} <a href="{% url 'date_data' d %}">{{ d }}</a></p>
 {% endfor %}
+</div>
 {% endblock %}
