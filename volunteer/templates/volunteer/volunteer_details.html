@@ -1,0 +1,14 @@
+{% extends "volunteers/base.html" %}
+{% block content %}
+		<ul>
+			<li>{{ volunteer.name }}</li>
+			<li>{{ volunteer.email }}</li>
+		</ul>
+		<p>You have registered successfully</p>
+		<script>
+			function Redirect() {
+				window.location="{% url 'home' %}";
+			}
+			setTimeout('Redirect()', 5000);
+		</script>
+{% endblock %}

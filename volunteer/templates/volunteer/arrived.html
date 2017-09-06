@@ -1,0 +1,10 @@
+{% extends "volunteers/base.html" %}
+{% block content %}
+		<ul>
+			{% for volunteer in arrived %}
+				<li>{{ volunteer.user_id }}</li>
+			{% endfor %}
+		</ul>
+{% endblock %}
+
+

@@ -1,0 +1,122 @@
+{% extends "volunteers/base.html" %}
+{% load i18n %}
+{% block content %}
+		<a href="{% url 'arrived' %}">{% trans "arrived" %}</a>
+		{% if form.errors %}
+			<p style="color: red;">{% blocktrans count form.errors|length as counter %}Please correct the error below.{% plural %}Please correct the {{ counter }} errors below.{% endblocktrans %}</p>
+		{% endif %}
+		<form action="" autocomplete="off" method="POST">{% csrf_token %}
+			<fieldset>
+				<div class="row">
+					<div class="field">
+						{{ form.first_name.errors }}
+						<label for="id_first_name">{% trans 'First name' %}</label>
+						{{ form.first_name }}
+					</div>
+					<div class="field">
+						{{ form.last_name.errors }}
+						<label for="id_last_name">{% trans 'Last name' %}</label>
+						{{ form.last_name }}
+					</div>
+				</div>
+				<div class="row">
+					<div class="field">
+						{{ form.email.errors }}
+						<label for="id_email">{% trans 'Email' %}</label>
+						{{ form.email }}
+					</div>
+					<div class="field">
+						{{ form.phone.errors }}
+						<label for="phone">{% trans 'Phone' %}</label>
+						{{ form.phone }}
+					</div>
+				</div>
+			</fieldset>
+			<fieldset>
+				<div class="row">
+					<div class="field">
+						{{ form.github.errors }}
+						<label for="github">{% trans 'Github' %}</label>
+						{{ form.github }}
+					</div>
+					<div class="field">
+						{{ form.linkedin.errors }}
+						<label for="linkedin">{% trans 'linkedin' %}</label>
+						{{ form.linkedin }}
+					</div>
+				</div>
+				<div class="row">
+					<div class="field">
+						{{ form.facebook.errors }}
+						<label for="id_facebook">{% trans 'facebook' %}</label>
+						{{ form.facebook }}
+					</div>
+					<div class="field">
+						{{ form.twitter.errors }}
+						<label for="id_tweeter">{% trans 'twitter' %}</label>
+						{{ form.twitter }}
+					</div>
+				</div>
+				<div class="row">
+					<div class="field">
+						{{ form.address.errors }}
+						<label for="id_address">{% trans 'address' %}</label>
+						{{ form.address }}
+					</div>
+					<div class="field">
+						{{ form.work_study_place.errors }}
+						<label for="id_work_study_place">{% trans 'work study place' %}</label>
+						{{ form.work_study_place }}
+					</div>
+				</div>
+				<div class="row">
+					<div class="field">
+						{{ form.birth_date.errors }}
+						<label for="id_birth_date">{% trans 'birth date' %}</label>
+						{{ form.birth_date }}
+					</div>
+				</div>
+			</fieldset>
+			<hr>
+			<fieldset>
+				<div class="columns">
+					<div class="column">
+						{{ form.eknights.errors }}
+						<label for="id_eknights">{% trans 'eknight' %}</label>
+						{{ form.eknights }}
+					</div>
+					<div class="column">
+						{{ form.expertise.errors }}
+						<label for="expertise">{% trans 'Expertise' %}</label>
+						{{ form.expertise }}
+					</div>
+					<div class="column">
+						{{ form.community.errors }}
+						<label for="community">{% trans 'Community' %}</label>
+						{{ form.community }}
+					</div>
+					<!--<div class="column">
+						{{ form.skill.errors }}
+						<label for="skills">{% trans 'Skills' %}</label>
+						{{ form.skill }}
+					</div>-->
+				</div>
+			</fieldset>
+			<div id="expertise_other" class="hidden">
+				<label for="other">{% trans 'other' %}</label><input type="text" id="other" name="other">
+			</div>
+			<div class="row">
+				<button type="submit">{% trans 'add volunteer' %}</button>
+				<button type="reset">{% trans 'reset' %}</button>
+			</div>
+		</form>
+		<script>
+			$(function() {
+				var current = new Date();
+				var current_year = current.getFullYear();
+				var first = current_year - 100;
+				var last = current_year - 10;
+				$("#id_birth_date").datepicker({ changeYear: true, yearRange: first + ":" + last, isRTL: true });
+			});
+		</script>
+{% endblock %}
